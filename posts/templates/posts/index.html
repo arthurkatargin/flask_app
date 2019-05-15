@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Flask
+{% endblock %}
+
+
+{% block Main %}
+<style>
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (https://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+
+
+
+</style>
+<!--<div id="wrapper">-->
+
+<!--    &lt;!&ndash; Sidebar &ndash;&gt;-->
+
+<!--    <div id="sidebar-wrapper">-->
+<!--        <ul class="sidebar-nav">-->
+<!--            <li class="sidebar-brand">-->
+<!--                <a href="#">-->
+<!--                    Start Bootstrap-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            {% for post in posts %}-->
+<!--            <li>-->
+<!--                <div class="sidebar-brand">-->
+<!--                    <ul class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton"-->
+<!--                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        {{ post.title }}-->
+<!--                    </ul>-->
+<!--                    {% for gost in post.gosts %}-->
+<!--                    <div class="btn btn-dark dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                        <a class="dropdown-item btn-dark"-->
+<!--                           href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{gost.name}}</a>-->
+<!--                    </div>-->
+<!--                    {% endfor %}-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; /#sidebar-wrapper &ndash;&gt;-->
+<!--    <nav class="menu">-->
+<!--        <ol>-->
+<!--            <li class="menu-item"><a href="{{ url_for('posts.index') }}"><i class="fa fa-home"></i></a></li>-->
+<!--            <li class="menu-item"><a href="">Меню</a></li>-->
+<!--            <li class="menu-item"><a href="#0">Widgets</a>-->
+<!--                <ol class="sub-menu">-->
+<!--                    <li class="menu-item"><a href="#0">Big Widgets</a></li>-->
+<!--                    <li class="menu-item"><a href="#0">Bigger Widgets</a></li>-->
+<!--                    <li class="menu-item"><a href="#0">Huge Widgets</a></li>-->
+<!--                </ol>-->
+<!--            </li>-->
+<!--            <li class="menu-item"><a href="#0">Редактировать</a>-->
+<!--                <ol class="sub-menu">-->
+<!--                    <li class="menu-item"><a href="{{ url_for('posts.create_post') }}">+ Добавить</a></li>-->
+<!--                    <li class="menu-item"><a href="posts/edit_post.html">Изменить</a></li>-->
+
+<!--                </ol>-->
+<!--            </li>-->
+
+<!--            <li class="menu-item"><a href="/admin">Админ</a></li>-->
+
+<!--        </ol>-->
+<!--        &lt;!&ndash;    <form class="form-inline my-2 my-lg-0" method="GET">&ndash;&gt;-->
+
+<!--        &lt;!&ndash;        <input class="form-control mr-sm-2" type="search" placeholder="Поиск" aria-label="Search" name="q"&ndash;&gt;-->
+<!--        &lt;!&ndash;               value="{{ request.args.get('q', '') }}">&ndash;&gt;-->
+<!--        &lt;!&ndash;        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Искать</button>&ndash;&gt;-->
+<!--        &lt;!&ndash;    </form>&ndash;&gt;-->
+
+<!--    </nav>-->
+<!--    &lt;!&ndash; Page Content &ndash;&gt;-->
+<!--    <div id="page-content-wrapper">-->
+<!--        <div class="container-fluid">-->
+<!--            <div class="row">-->
+<!--                <div class="col-lg-12">-->
+<!--                    <h1>Simple Sidebar</h1>-->
+<!--                    <p></p>-->
+
+<!--                    <a href="#menu-toggle" class="btn btn-default menu-toggle">Push Menu</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; /#page-content-wrapper &ndash;&gt;-->
+<!--    &lt;!&ndash; /#wrapper &ndash;&gt;-->
+<!--    &lt;!&ndash; Menu Toggle Script &ndash;&gt;-->
+<!--    <script>-->
+<!--    $(".menu-toggle").click(function(e) {-->
+<!--        e.preventDefault();-->
+<!--        $("#wrapper").toggleClass("toggled");-->
+<!--    });-->
+
+
+<!--    </script>-->
+<!--</div>-->
+{% endblock %}
+
+
+{% block content_title %}
+<style>
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (https://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+
+
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+{% endblock %}

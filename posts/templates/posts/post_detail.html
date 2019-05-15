@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ post.title }}
+{% endblock %}
+
+
+{% block content_title %}
+<h1>{{ post.title }}</h1>
+{% endblock %}
+
+{% block content %}
+
+<!--<div class="gosts">-->
+<!--    {% for gost in gosts %}-->
+<!--    <h3><a href="{{ url_for('posts.gost_detail', slug=gost.slug) }}"><span-->
+<!--            class="badge badge-warning">{{ gost.name }}</span></a></h3>-->
+
+<!--    {% endfor %}-->
+<!--</div>-->
+<!--<div class="main-content">-->
+<!--    {{ post.body }}-->
+<!--</div>-->
+{% endblock %}
+
+{% block Main %}
+{% for gost in gosts %}
+<h3><span
+        class="">{{ gost.body }}</span></h3>
+
+{% endfor %}
+{% endblock %}
